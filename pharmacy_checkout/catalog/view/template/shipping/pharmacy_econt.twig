@@ -1,0 +1,30 @@
+<div class="mb-3">{{ text_form_description }}</div>
+{# <div id='shippment-calc-url' data-url="{{ shippment_calc_url }}" class='d-none'></div> #}
+<div id='error-shipment-price' class='d-none'>{{ error_shipment_price }}</div>
+
+{# ФОРМА ЗА ДОСТАВКА #}
+<iframe src="{{ shippment_calc_url }}" style='min-height: 750px; width: 100%;'></iframe>
+
+{# В това поле ще се запзаи уникален индентификатор на адреса за доставка.  #}
+{# Попълва се от Java Script функцията която 'слуша' съобщенията от формата за доставка #}
+<input id="input-customer-info-id" type="hidden" name="customerInfo[id]">
+
+{# shipment modal dialog #}
+<div class="modal fade" id="modal-shipment-price" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modal-shipment-price-label" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="modal-shipment-price-label">{{ text_modal_shipment_econt }}</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-2"><i class="fas fa-chevron-circle-right align-self-center text-pharmacy me-1"></i>{{ text_modal_shipment_price }} <span class="fw-bold" id="modal-shipment-data-price"></span></div>
+        <div class="mb-0"><i class="fas fa-chevron-circle-right align-self-center text-pharmacy me-1"></i>{{ text_modal_shipment_price_cod }} <span class="fw-bold" id="modal-shipment-data-price-cod"></span></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-light" data-bs-dismiss="modal">{{ button_modal_close }}</button>
+        <button type="button" class="btn btn-pharmacy">{{ button_modal_ok }}</button>
+      </div>
+    </div>
+  </div>
+</div>

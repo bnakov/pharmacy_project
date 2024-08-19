@@ -1,0 +1,171 @@
+{{ header }}{{ column_left }}
+<div id="content">
+	<div class="page-header">
+		<div class="container-fluid">
+			<div class="float-end">
+				<button type="submit" form="form-module" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa-solid fa-save"></i></button>
+				<a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fa-solid fa-reply"></i></a></div>
+			<h1>{{ heading_title }}</h1>
+			<ol class="breadcrumb">
+				{% for breadcrumb in breadcrumbs %}
+					<li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+				{% endfor %}
+			</ol>
+		</div>
+	</div>
+	<div class="container-fluid">
+		<div class="card">
+			<div class="card-header"><i class="fa-solid fa-pencil"></i> {{ text_edit }}</div>
+			<div class="card-body">
+
+				<form id="form-module" action="{{ save }}" method="post" data-oc-toggle="ajax">
+					
+					<div class="row mb-3">
+						<label for="input-status" class="col-sm-2 col-form-label">{{ entry_status }}</label>
+						<div class="col-sm-10">
+							<div class="form-check form-switch form-switch-lg">
+								<input type="hidden" name="module_pharmacy_products_status" value="0"/>
+								<input type="checkbox" name="module_pharmacy_products_status" value="1" id="input-status" class="form-check-input"{% if module_pharmacy_products_status %} checked{% endif %}/>
+							</div>
+						</div>
+					</div>
+
+					<ul class="nav nav-tabs mb-3" id="mod-pharmacy-products" role="tablist">
+						<li class="nav-item" role="presentation">
+							<button class="nav-link active" id="featured-tab" data-bs-toggle="tab" data-bs-target="#featured-tab-pane" 
+								type="button" role="tab" aria-controls="featured-tab-pane" aria-selected="true">{{ text_featured_tab }}</button>
+						</li>
+						<li class="nav-item" role="presentation">
+							<button class="nav-link" id="topseller-tab" data-bs-toggle="tab" data-bs-target="#topseller-tab-pane" 
+								type="button" role="tab" aria-controls="topseller-tab-pane" aria-selected="false">{{ text_topseller_tab }}</button>
+						</li>
+						<li class="nav-item" role="presentation">
+							<button class="nav-link" id="most-searched-tab" data-bs-toggle="tab" data-bs-target="#most-searched-tab-pane" 
+								type="button" role="tab" aria-controls="most-searched-tab-pane" aria-selected="false">{{ text_most_searched_tab }}</button>
+						</li>
+					</ul>
+
+					<div class="tab-content mb-3" id="mod-pharmacy-products-content">
+
+						<!-- tab featured start -->
+						<div class="tab-pane fade show active" id="featured-tab-pane" role="tabpanel" aria-labelledby="featured-tab" tabindex="0">
+
+							<div class="row mb-3">
+								<label class="col-sm-2 col-form-label">{{ entry_product }}</label>
+								<div class="col-sm-10">
+								<input type="text" name="product" value="" placeholder="{{ entry_product }}" id="input-product" data-oc-target="autocomplete-product" class="form-control" autocomplete="off"/>
+								<ul id="autocomplete-product" class="dropdown-menu"></ul>
+								<div class="form-control p-0" style="height: 150px; overflow: auto;">
+									<table id="featured-product" class="table m-0">
+									<tbody>
+										{% for product in featured.products %}
+										<tr id="featured-product-{{ product.product_id }}">
+											<td>{{ product.name }}<input type="hidden" name="module_pharmacy_products_featured[products][]" value="{{ product.product_id }}"/></td>
+											<td class="text-end"><button type="button" class="btn btn-danger"><i class="fa-solid fa-circle-minus"></i></button></td>
+										</tr>
+										{% endfor %}
+									</tbody>
+									</table>
+								</div>
+								<div class="form-text text-muted">{{ help_product }}</div>
+								</div>
+							</div>
+							<div class="row mb-3">
+								<label for="input-axis" class="col-sm-2 col-form-label">{{ entry_axis }}</label>
+								<div class="col-sm-10">
+								<select name="module_pharmacy_products_featured[axis]" id="input-axis" class="form-select">
+									<option value="horizontal"{% if featured.axis == 'horizontal' %} selected{% endif %}>{{ entry_horizontal }}</option>
+									<option value="vertical"{% if featured.axis == 'vertical' %} selected{% endif %}>{{ entry_vertical }}</option>
+								</select>
+								</div>
+							</div>
+							<div class="row mb-3">
+								<label for="input-width" class="col-sm-2 col-form-label">{{ entry_width }}</label>
+								<div class="col-sm-10">
+								<input type="text" name="module_pharmacy_products_featured[width]" value="{{ featured.width }}" placeholder="{{ entry_width }}" id="input-width" class="form-control"/>
+								<div id="error-width" class="invalid-feedback"></div>
+								</div>
+							</div>
+							<div class="row mb-3">
+								<label for="input-height" class="col-sm-2 col-form-label">{{ entry_height }}</label>
+								<div class="col-sm-10">
+								<input type="text" name="module_pharmacy_products_featured[height]" value="{{ featured.height }}" placeholder="{{ entry_height }}" id="input-height" class="form-control"/>
+								<div id="error-height" class="invalid-feedback"></div>
+								</div>
+							</div>
+						</div>
+						<!-- tab featured end -->
+
+						<!-- tab topseller start -->
+						<div class="tab-pane fade" id="topseller-tab-pane" role="tabpanel" aria-labelledby="topseller-tab" tabindex="0">
+						</div>
+						<!-- tab topseller end -->
+
+						<!-- tab most searched start -->
+						<div class="tab-pane fade" id="most-searched-tab-pane" role="tabpanel" aria-labelledby="most-searched-tab" tabindex="0">
+						</div>
+						<!-- tab most searched end -->
+
+					</div>
+
+					<input type="hidden" name="module_id" value="{{ module_id }}" id="input-module-id"/>
+
+				</form>
+
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+$('#input-product').autocomplete({
+    source: function (request, response) {
+        $.ajax({
+            url: 'index.php?route=catalog/product.autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
+            dataType: 'json',
+            success: function (json) {
+                response($.map(json, function (item) {
+                    return {
+                        label: item['name'],
+                        value: item['product_id']
+                    }
+                }));
+            }
+        });
+    },
+    select: function (item) {
+        $('#input-product').val('');
+
+        $('#featured-product-' + item['value']).remove();
+
+        html = `<tr id="featured-product-${item['value']}">
+        			<td>${item['label']}<input type="hidden" name="module_pharmacy_products_featured[products][]" value="${item['value']}"/></td>
+          			<td class="text-end"><button type="button" class="btn btn-danger"><i class="fa-solid fa-circle-minus"></i></button></td>
+        		</tr>`;
+
+        $('#featured-product tbody').append(html);
+    }
+});
+
+$('#featured-product').on('click', '.btn', function () {
+    $(this).parent().parent().remove();
+});
+</script>
+
+{{ footer }}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

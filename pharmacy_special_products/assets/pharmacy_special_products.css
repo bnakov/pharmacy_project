@@ -1,0 +1,68 @@
+#pharmacy-special-products {
+    margin: 0;
+    padding: 3.5rem 0;
+    display: flex;
+    position: relative;
+    background-color: var(--pharmacy-background-blue);
+}
+
+#pharmacy-special-products .price-new {
+    display: block;
+}
+@media (min-width: 576px) {
+    #pharmacy-special-products .price-new {
+        display: inline-block;
+    }
+}
+@media (min-width: 768px) {
+    #pharmacy-special-products .price-new {
+        display: block;
+    }
+}
+@media (min-width: 1200px) {
+    #pharmacy-special-products .price-new {
+        display: inline-block;
+    }
+}
+#pharmacy-special-products .rating,
+#pharmacy-special-products .rating-star,
+#pharmacy-special-products .reviews-count {
+    line-height: 1 !important;
+    font-size: 0.9rem !important;
+}
+
+
+#pharmacy-special-products .all-special-products {
+    display: flex;
+    padding: 0.5rem 1.5rem;
+    min-height: 50px;
+    text-align: center;
+    min-width: 160px !important;
+    background-color: white;
+    border: 1px solid var(--bs-gray-400);
+    text-wrap: nowrap;
+    text-decoration: none;
+    border-bottom-left-radius: var(--bs-border-radius-xxl) !important;
+    border-top-left-radius: var(--bs-border-radius-xxl) !important;
+    border-top-right-radius: var(--bs-border-radius-xxl) !important;
+    border-bottom-right-radius: var(--bs-border-radius-xxl) !important;
+    transition: all 0.3s ease-in-out;
+}
+
+#pharmacy-special-products .all-special-products:hover {
+    border: 1px solid var(--pharmacy-border-color);
+}
+
+#pharmacy-special-products .all-special-products span {
+    color: var(--bs-dark);
+    align-self: center;
+}
+
+@media (max-width: 768px) {
+    #pharmacy-special-products .special-products > div:nth-child(odd) {
+        padding-right: calc(0.75rem * 0.5);
+    }
+    #pharmacy-special-products .special-products > div:nth-child(even) {
+        padding-left: calc(0.75rem * 0.5);
+    }
+}
